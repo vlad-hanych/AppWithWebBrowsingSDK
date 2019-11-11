@@ -16,6 +16,8 @@ import com.android.installreferrer.api.ReferrerDetails
 import com.foxy_corporation.webbrowsingsdk.App
 import com.foxy_corporation.webbrowsingsdk.mvp.view.ui.WebBrowsingActivity
 import javax.inject.Inject
+import java.lang.ref.WeakReference
+
 
 class WebBrowsingSDK : AbstrSDKView {
     @Inject
@@ -23,10 +25,9 @@ class WebBrowsingSDK : AbstrSDKView {
 
     lateinit var SDKPresenter: SDKPresenter
 
-    lateinit var localContext: Context
+    lateinit var weakContext: WeakReference<Context>
 
     companion object {
-        @SuppressLint("StaticFieldLeak")
         private val instance = WebBrowsingSDK()
 
         fun initialize(contx: Context) {
@@ -34,7 +35,7 @@ class WebBrowsingSDK : AbstrSDKView {
 
             instance.SDKPresenter = SDKPresenter()
 
-            instance.localContext = contx
+            instance.weakContext =  WeakReference(contx)
 
             instance.SDKPresenter.attachView(instance)
 
@@ -57,7 +58,7 @@ class WebBrowsingSDK : AbstrSDKView {
     private fun attemptToGetFacebookDeeplink(): String {
         var facebookDeeplink = "none"
 
-        AppLinkData.fetchDeferredAppLinkData(localContext) { appLinkData ->
+        AppLinkData.fetchDeferredAppLinkData(weakContext.get()) { appLinkData ->
             if (appLinkData != null) {
                 facebookDeeplink = appLinkData.targetUri.toString()
 
@@ -73,9 +74,9 @@ class WebBrowsingSDK : AbstrSDKView {
     }
 
     private fun prepareAndSendDetailedUserData(isFirstTime: Boolean, link: String) {
-        val packageName = localContext.packageName
+        val packageName = weakContext.get()!!.packageName
 
-        val countryCode = utils.getDeviceCountryCode(localContext)
+        val countryCode = utils.getDeviceCountryCode(weakContext.get()!!)
 
         ///val timeZone = TimeZone.getDefault().rawOffset
         val tz = TimeZone.getDefault()
@@ -87,7 +88,7 @@ class WebBrowsingSDK : AbstrSDKView {
 
         val deviceName = getDeviceName()
 
-        val bluetoothMacAddress = Settings.Secure.getString(localContext.contentResolver, "bluetooth_address")
+        val bluetoothMacAddress = Settings.Secure.getString(weakContext.get()!!.contentResolver, "bluetooth_address")
 
         SDKPresenter.handleSendingUserAdData(
             isFirstTime,
@@ -104,7 +105,7 @@ class WebBrowsingSDK : AbstrSDKView {
     private fun getPlayMarketReferrer(): String {
         var referrer = "none"
 
-        val referrerClient = InstallReferrerClient.newBuilder(localContext).build()
+        val referrerClient = InstallReferrerClient.newBuilder(weakContext.get()!!).build()
         referrerClient.startConnection(object : InstallReferrerStateListener {
 
             override fun onInstallReferrerSetupFinished(responseCode: Int) {
@@ -181,16 +182,16 @@ class WebBrowsingSDK : AbstrSDKView {
 
     override fun onGotResultLink(resultLink: String) {
         ///Log.d("onGotResultLink_", resultLink)
-        Toast.makeText(localContext, "Got result link! It's: $resultLink", Toast.LENGTH_LONG).show()
+        Toast.makeText(weakContext.get(), "Got result link! It's: $resultLink", Toast.LENGTH_LONG).show()
 
-        val webBrowsingIntent = Intent(localContext, WebBrowsingActivity::class.java)
+        val webBrowsingIntent = Intent(weakContext.get(), WebBrowsingActivity::class.java)
         webBrowsingIntent.putExtra("content", resultLink)
 
-        localContext.startActivity(webBrowsingIntent)
+        weakContext.get()!!.startActivity(webBrowsingIntent)
     }
 
 
     override fun onBackEndError(errorMessage: String) {
-        Toast.makeText(localContext, "Erroro: $errorMessage", Toast.LENGTH_LONG).show()
+        Toast.makeText(weakContext.get(), "Erroro: $errorMessage", Toast.LENGTH_LONG).show()
     }
 }

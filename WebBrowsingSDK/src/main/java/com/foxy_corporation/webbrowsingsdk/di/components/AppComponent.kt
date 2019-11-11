@@ -14,7 +14,6 @@ import javax.inject.Singleton
 @Singleton
 @Component(modules = [AppModule::class, RetrofitModule::class])
 interface AppComponent {
-    fun inject(app: App)
     fun inject(serverRepository: ServerRepository)
     fun inject(dataManager: DataManager)
     fun inject(SDKPresenter: SDKPresenter)
