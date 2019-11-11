@@ -1,6 +1,6 @@
-package com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction
+package com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.concrete
 
-import com.foxy_corporation.webbrowsingsdk.mvp.view.ui.AbstrView
+import com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.AbstrView
 
 interface AbstrSDKView: AbstrView {
     fun needToGetAlreadyLaunched()

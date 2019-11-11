@@ -1,4 +1,4 @@
-package com.foxy_corporation.webbrowsingsdk.mvp.view.ui
+package com.foxy_corporation.webbrowsingsdk.mvp.view
 
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
@@ -18,7 +18,7 @@ import com.github.angads25.filepicker.model.DialogProperties
 import com.github.angads25.filepicker.view.FilePickerDialog
 import java.io.File
 import com.foxy_corporation.webbrowsingsdk.mvp.presenter.implementation.WebBrowsingPresenter
-import com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.AbstrWebBrowsingView
+import com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.concrete.AbstrWebBrowsingView
 import android.net.UrlQuerySanitizer
 import com.appsflyer.AFInAppEventParameterName
 import com.appsflyer.AppsFlyerLib
@@ -33,7 +33,8 @@ import org.json.JSONArray
 import java.net.URL
 import java.util.regex.Pattern
 
-class WebBrowsingActivity : AppCompatActivity(), AbstrWebBrowsingView {
+class WebBrowsingActivity : AppCompatActivity(),
+    AbstrWebBrowsingView {
     private val WEB_ACTIVITY_LOG_TAG = "WebActivity_qqq_"
 
     private val EVENT_GOAL_KEY = "goal"

@@ -1,6 +1,6 @@
 package com.foxy_corporation.webbrowsingsdk.mvp.presenter
 
-import com.foxy_corporation.webbrowsingsdk.mvp.view.ui.AbstrView
+import com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.AbstrView
 
 open class BasePresenter<V: AbstrView> {
 

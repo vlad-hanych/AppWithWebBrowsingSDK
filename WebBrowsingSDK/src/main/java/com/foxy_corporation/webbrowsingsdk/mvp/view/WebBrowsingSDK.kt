@@ -1,25 +1,24 @@
 package com.foxy_corporation.webbrowsingsdk.mvp.view
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.provider.Settings
 import android.content.Intent
 import android.widget.Toast
 import com.facebook.applinks.AppLinkData
 import com.foxy_corporation.webbrowsingsdk.mvp.presenter.implementation.SDKPresenter
-import com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.AbstrSDKView
+import com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.concrete.AbstrSDKView
 import java.util.*
 import android.os.Build
 import com.android.installreferrer.api.InstallReferrerClient
 import com.android.installreferrer.api.InstallReferrerStateListener
 import com.android.installreferrer.api.ReferrerDetails
 import com.foxy_corporation.webbrowsingsdk.App
-import com.foxy_corporation.webbrowsingsdk.mvp.view.ui.WebBrowsingActivity
 import javax.inject.Inject
 import java.lang.ref.WeakReference
 
 
-class WebBrowsingSDK : AbstrSDKView {
+class WebBrowsingSDK :
+    AbstrSDKView {
     @Inject
     lateinit var utils: Utilities
 

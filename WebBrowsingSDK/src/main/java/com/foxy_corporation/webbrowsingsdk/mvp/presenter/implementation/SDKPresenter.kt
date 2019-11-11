@@ -4,7 +4,7 @@ import com.foxy_corporation.webbrowsingsdk.App
 import com.foxy_corporation.webbrowsingsdk.mvp.DataManager
 import com.foxy_corporation.webbrowsingsdk.mvp.presenter.BasePresenter
 import com.foxy_corporation.webbrowsingsdk.mvp.presenter.abstraction.AbstrSDKPresenter
-import com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.AbstrSDKView
+import com.foxy_corporation.webbrowsingsdk.mvp.view.abstraction.concrete.AbstrSDKView
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import rx.Subscriber
